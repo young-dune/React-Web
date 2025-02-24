@@ -8,6 +8,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
+import { auth } from "./firebase";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ function App() {
   const [Loading, setLoading] = useState(true);
   // firebase가 유저를 확인하는동안 loading화면
   const init = async () => {
-    // wait for firebase
+    await auth.authStateReady(); // 인증 상태가 로드되었음을 표시?
     setLoading(false);
   };
   useEffect(() => {
