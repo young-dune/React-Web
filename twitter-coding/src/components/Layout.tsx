@@ -5,7 +5,7 @@ export default function layout() {
     return (
         <div>
             <h2>layout</h2>
-            <Outlet/>
+            <Outlet />
         </div>
     )
 }
