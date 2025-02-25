@@ -4,7 +4,7 @@ import Home from "./routes/Home";
 import Profile from "./routes/Profile";
 import Login from "./routes/Login";
 import CreateAccount from "./routes/CreateAccount";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
@@ -47,6 +47,12 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
+const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+`
+
 function App() {
   const [Loading, setLoading] = useState(true);
   // firebase가 유저를 확인하는동안 loading화면
@@ -60,8 +66,10 @@ function App() {
 
   return (
     <>
-      <GlobalStyles />
-      {Loading ? <LoadingScreen /> : <RouterProvider router={router} />}
+      <Wrapper>
+        <GlobalStyles />
+        {Loading ? <LoadingScreen /> : <RouterProvider router={router} />}
+      </Wrapper>
     </>
   )
 }
