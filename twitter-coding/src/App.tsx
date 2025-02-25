@@ -9,11 +9,15 @@ import reset from "styled-reset";
 import { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import { auth } from "./firebase";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/", // 모든 페이지에서 발생하게 만듦
-    element: <Layout />,
+    element:
+      <ProtectedRoute>
+        <Layout/>
+      </ProtectedRoute>,
     children: [
       {
         path: "",
