@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+// Login && CreateAccount에서 사용하는 컴포넌트들
+
 export const errors = {
     "auth/email-already-in-use": "That email already exists!",
 }
