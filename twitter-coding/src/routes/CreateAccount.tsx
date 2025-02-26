@@ -1,46 +1,10 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useState } from "react";
-import styled from "styled-components";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-
-const Wrapper = styled.div`
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 420px;
-    padding:50px 0px;
-`;
-const Title = styled.h1`
-    font-size: 42px;
-`;
-
-const Form = styled.form`
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-`;
-const Input = styled.input`
-    padding:10px 20px;
-    border-radius: 50px;
-    border: none;
-    width: 100%;
-    font-size: 16px;
-    &[type="submit"]{
-        cursor: pointer;
-        &:hover{
-            opacity: 0.8;
-        }
-    }
-`;
-
-const Error = styled.span`
-    font-weight: 600;
-    color: tomato;
-`;
+import { FirebaseError } from "firebase/app";
+import { Link } from "react-router-dom";
+import { Form ,Error, Input, Switcher, Title, Wrapper } from "../components/AuthComponents";
 
 export default function CreateAccount() {
     const navigate = useNavigate();
@@ -58,6 +22,7 @@ export default function CreateAccount() {
     };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        setError(""); // 사용자가 버튼을 한번 더 클릭 -> 에러 내용을 초기화
         e.preventDefault();
         if (loading || name === "" || email === "" || password === "") return;
         // 입력값이 잘못됐거나 loading === true라면 => 일찍 종료한다.
@@ -65,21 +30,24 @@ export default function CreateAccount() {
             setLoading(true);
             const credent = await createUserWithEmailAndPassword(auth, email, password);
             // 1. create account with credent
-            console.log(credent.user);
             await updateProfile(credent.user, {
                 displayName: name,
+                // 2. update user profile
             });
-            // 2. update user profile
             navigate("/");
             // 3. redirecting to home page.
         } catch (e) {
-            //set error => 해당 이메일로 이미 계정이 존재하거나 비밀번호가 유효하지 않은 경우.
+            if (e instanceof FirebaseError) {
+                setError(e.message);
+            }
         }
         finally {
             setLoading(false);
         }
     }
 
+
+    //set error => 해당 이메일로 이미 계정이 존재하거나 비밀번호가 유효하지 않은 경우.
     return (
         <Wrapper>
             <Title>Join 𝕏</Title>
@@ -109,6 +77,10 @@ export default function CreateAccount() {
 
             </Form>
             {error !== "" ? <Error>{error}</Error> : null}
+            <Switcher>
+                Already have an account?
+                <Link to="/login"> Log in! &rarr;</Link>
+            </Switcher>
         </Wrapper>
     )
 }
