@@ -6,34 +6,30 @@ import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
 import { Form, Error, Input, Switcher, Title, Wrapper } from "../components/AuthComponents";
 import GithubButton from "../components/GithubButton";
+import GoogleButton from "../components/GoogleButton";
 
 export default function CreateAccount() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({ name: "", email: "", password: "" });
     const [error, setError] = useState("");
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { target: { name, value } } = e;
-        if (name === "name") { setName(value); }
-        else if (name === "email") { setEmail(value); }
-        else if (name === "password") { setPassword(value); }
+        setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         setError(""); // 사용자가 버튼을 한번 더 클릭 -> 에러 내용을 초기화
         e.preventDefault();
-        if (loading || name === "" || email === "" || password === "") return;
+        if (loading || !form.name || !form.email || !form.password) return;
         // 입력값이 잘못됐거나 loading === true라면 => 일찍 종료한다.
         try {
             setLoading(true);
-            const credent = await createUserWithEmailAndPassword(auth, email, password);
+            const credent = await createUserWithEmailAndPassword(auth, form.email, form.password);
             // 1. create account with credent
             await updateProfile(credent.user, {
-                displayName: name,
-                // 2. update user profile
+                displayName: form.name,
+                // 2. update user profile , firebase/auth엔 profile이 존재한다.
             });
             navigate("/");
             // 3. redirecting to home page.
@@ -56,21 +52,21 @@ export default function CreateAccount() {
                 <Input
                     onChange={onChange}
                     name="name"
-                    value={name}
+                    value={form.name}
                     placeholder="Name"
                     type="text"
                     required />
                 <Input
                     onChange={onChange}
                     name="email"
-                    value={email}
+                    value={form.email}
                     placeholder="Email"
                     type="email"
                     required />
                 <Input
                     onChange={onChange}
                     name="password"
-                    value={password}
+                    value={form.password}
                     placeholder="Password"
                     type="password"
                     required />
@@ -83,6 +79,7 @@ export default function CreateAccount() {
                 <Link to="/login"> Log in! &rarr;</Link>
             </Switcher>
             <GithubButton />
+            <GoogleButton />
         </Wrapper>
     )
 }

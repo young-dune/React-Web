@@ -11,6 +11,6 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig); 
 
-export const auth = getAuth(app)
+export const auth = getAuth(app) // 활성화한 인증 product에 대한 접근 권한을 얻음.

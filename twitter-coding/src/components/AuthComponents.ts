@@ -30,9 +30,12 @@ export const Input = styled.input`
     border-radius: 50px;
     border: none;
     width: 100%;
+    background-color: 1d9bf0;
     font-size: 16px;
     &[type="submit"]{
         cursor: pointer;
+        color: white;
+        background-color: #1d9bf0;
         &:hover{
             opacity: 0.8;
         }

@@ -11,6 +11,7 @@ import LoadingScreen from "./components/LoadingScreen";
 import { auth } from "./firebase";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// router로 전달받은 사용자는 각 루트에 따라 페이지를 이동한다.
 const router = createBrowserRouter([
   {
     path: "/", // 모든 페이지에서 발생하게 만듦
@@ -61,8 +62,8 @@ function App() {
   const [Loading, setLoading] = useState(true);
   // firebase가 유저를 확인하는동안 loading화면
   const init = async () => {
-    await auth.authStateReady(); // 인증 상태가 로드되었음을 표시?
-    setLoading(false);
+    await auth.authStateReady(); // 사용자가 로그인했는지 안했는지, 그리고 누구인지에 대한 정보를 기다린다.
+    setLoading(false); 
   };
   useEffect(() => {
     init()
@@ -73,6 +74,7 @@ function App() {
       <Wrapper>
         <GlobalStyles />
         {Loading ? <LoadingScreen /> : <RouterProvider router={router} />}
+        {/* 사용자를 router로 보낸다. */}
       </Wrapper>
     </>
   )
