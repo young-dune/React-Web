@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     path: "/", // 모든 페이지에서 발생하게 만듦
     element:
       <ProtectedRoute>
-        <Layout/>
+        <Layout />
       </ProtectedRoute>,
     children: [
       {
@@ -63,7 +63,7 @@ function App() {
   // firebase가 유저를 확인하는동안 loading화면
   const init = async () => {
     await auth.authStateReady(); // 사용자가 로그인했는지 안했는지, 그리고 누구인지에 대한 정보를 기다린다.
-    setLoading(false); 
+    setLoading(false);
   };
   useEffect(() => {
     init()
