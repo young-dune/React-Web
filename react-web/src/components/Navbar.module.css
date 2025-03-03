@@ -1,0 +1,24 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    color: #493D9E;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    transition: backgroun d-color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.navbar:hover {
+    background-color: #493D9E;
+    color: #fff;
+}

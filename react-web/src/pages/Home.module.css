@@ -1,6 +1,8 @@
 .container {
     height: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
@@ -10,7 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 300;
+    font-weight: 600;
+    font-size: 2rem;
 }
 
 .movies {
@@ -20,6 +23,7 @@
     padding: 50px;
     width: 80%;
     padding-top: 70px;
+    margin-top: 80px;
 }
 
 @media screen and (max-width: 1090px) {
